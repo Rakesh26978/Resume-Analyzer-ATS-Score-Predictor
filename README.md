@@ -1,30 +1,68 @@
-
 # 📄 Resume Analyzer & ATS Score Predictor
 
-An AI-powered Resume Analyzer that calculates ATS match score using BERT embeddings and allows users to apply for jobs through an auto-filled application form.
+An AI-powered **Resume Analyzer & ATS Score Predictor** that helps candidates measure how well their resume matches a job description.  
+It uses **BERT-based Sentence Transformers** to calculate an ATS similarity score and provides an auto-filled job application portal.
 
-## 🚀 Features
-- Upload Resume PDF
-- Paste Job Description
-- Predict ATS Score using NLP + BERT
-- Auto-fill candidate details
-- Multi-step Job Application Portal
-- Submit application with confirmation message
+---
+
+## 🚀 Project Overview
+
+This project is designed to simulate an **Applicant Tracking System (ATS)** used by companies during hiring.  
+Users can:
+
+- Upload their resume (PDF)
+- Paste a job description
+- Get an ATS match score instantly
+- Auto-extract candidate details
+- Apply for the job using a multi-step application form
+
+---
+
+## ✨ Key Features
+
+✅ **Resume Upload (PDF Support)**  
+Upload resumes in PDF format and extract text using NLP techniques.
+
+✅ **Job Description Matching**  
+Paste any job description and compare it with the resume.
+
+✅ **ATS Score Prediction (AI-Based)**  
+Uses **Sentence Transformers (BERT embeddings)** and cosine similarity to generate an ATS match score.
+
+✅ **Auto-Filled Candidate Details**  
+Extracts information like:
+
+- Name  
+- Email  
+- Phone number  
+- Skills  
+
+✅ **Multi-Step Job Application Portal**  
+Smooth UI with step-by-step form navigation.
+
+✅ **Application Submission Confirmation**  
+Users receive a success message after submitting the job application.
+
+---
 
 ## 🛠 Tech Stack
-- Frontend: React.js
-- Backend: FastAPI (Python)
-- AI Model: Sentence Transformers (BERT)
-- NLP: NLTK, PyPDF2
 
-## ▶ Run Project Locally
+### Frontend
+- React.js  
+- Axios  
+- CSS / Bootstrap  
 
 ### Backend
-```bash
-cd backend
-pip install -r requirements.txt
-python -m uvicorn main:app --reload
-=======
-# Resume-Analyzer-ATS-Score-Predictor
-Built an AI-based Resume Analyzer &amp; ATS Score Predictor using React.js and FastAPI. The system parses uploaded resumes, calculates ATS similarity score with job descriptions using BERT NLP embeddings, and enables job application submission through an auto-filled form.
->>>>>>> c526bccfb210d854257f55648b7782750050aa24
+- FastAPI (Python)  
+- Uvicorn  
+
+### AI / NLP Tools
+- Sentence Transformers (BERT Model)  
+- NLTK  
+- PyPDF2  
+- Scikit-learn (Cosine Similarity)
+
+---
+
+## 📂 Project Structure
+
