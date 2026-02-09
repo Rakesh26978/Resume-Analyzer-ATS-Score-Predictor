@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 📄 Resume Analyzer & ATS Score Predictor
 
 An AI-powered Resume Analyzer that calculates ATS match score using BERT embeddings and allows users to apply for jobs through an auto-filled application form.
