@@ -6,7 +6,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 nltk.download("punkt")
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = None
+
+@app.on_event("startup")
+def load_model():
+    global model
+    model = SentenceTransformer("all-MiniLM-L6-v2")
 
 app = FastAPI()
 app.add_middleware(
