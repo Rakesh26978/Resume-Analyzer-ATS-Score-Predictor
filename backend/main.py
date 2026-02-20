@@ -1,19 +1,12 @@
 from fastapi import FastAPI, UploadFile, File, Form
-import PyPDF2, re, nltk
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
 from fastapi.middleware.cors import CORSMiddleware
-
-
-nltk.download("punkt")
-model = None
-
-@app.on_event("startup")
-def load_model():
-    global model
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+import PyPDF2, re
+from sklearn.metrics.pairwise import cosine_similarity
+from sentence_transformers import SentenceTransformer
+import io
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,23 +15,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+model = None
 
-def extract_text(pdf):
-    reader = PyPDF2.PdfReader(pdf)
+@app.on_event("startup")
+def load_model():
+    global model
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+
+def extract_text(pdf_file):
+    reader = PyPDF2.PdfReader(pdf_file)
     return " ".join([p.extract_text() for p in reader.pages if p.extract_text()])
-
-def extract_email(text):
-    m = re.search(r'\S+@\S+', text)
-    return m.group() if m else ""
-
-def extract_phone(text):
-    m = re.search(r'\+?\d{10,13}', text)
-    return m.group() if m else ""
 
 def calculate_ats(resume, jd):
     v1 = model.encode([resume])
     v2 = model.encode([jd])
     return round(float(cosine_similarity(v1, v2)[0][0]) * 100, 2)
+
+@app.get("/")
+def home():
+    return {"status": "API running"}
 
 @app.post("/analyze")
 async def analyze_resume(
@@ -46,15 +41,8 @@ async def analyze_resume(
     job_description: str = Form(...)
 ):
     content = await resume.read()
-    with open("temp.pdf", "wb") as f:
-        f.write(content)
+    text = extract_text(io.BytesIO(content))
 
-    text = extract_text("temp.pdf")
-
-    response = {
-        "name": text.split("\n")[0],
-        "email": extract_email(text),
-        "phone": extract_phone(text),
+    return {
         "ats_score": calculate_ats(text, job_description)
     }
-    return response
